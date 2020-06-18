@@ -23,8 +23,8 @@ public:
 	const int read(size_t n, char * bytes) const override;
 	const int write(size_t n, const char *bytes) const override;
 	const void close() const override;
-	const std::string lastError()const override{
-		return this->_err.message();
+	const std::exception lastError()const override{
+		return boost::system::system_error(this->_err);
 	}
 
 private:

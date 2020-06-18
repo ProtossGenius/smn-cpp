@@ -21,7 +21,7 @@ int main(){
 		cout << boost::system::system_error(ec).what() <<endl;
 		return -1;
 	}
-	
+	try{	
 	clt_rpc_rpc_itf::Login l(shared_ptr<smnet::Conn>(new smnet::SMConn(socket)));	
 	l.Test2("helo", [](shared_ptr<smnet::Conn> c){
 			string str;
@@ -29,5 +29,7 @@ int main(){
 			cout << str <<endl;
 			return res;
 			});
-
+	}catch(std::string str){
+		cout << str <<endl;
+	}
 }
