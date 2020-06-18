@@ -2,5 +2,5 @@ test:
 
 clean:
 	rm -rf *.o *.h *.cpp
-build:clean
+build:
 	g++  -Wall -c *.cpp 
