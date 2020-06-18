@@ -1,0 +1,27 @@
+syntax = "proto3";
+option java_package = "pb";
+option java_outer_classname="smn_dict";
+package smn_dict;
+
+enum EDict{
+	None = 0;
+	rip_ano_rpc_itf_Login_Test2_Ret = 1;
+	rip_ano_rpc_itf_MutiTest_SendMsg_Prm = 2;
+	rip_ano_rpc_itf_MutiTest_SendMsg_Ret = 3;
+	rip_ano_rpc_itf_Login_DoLogin_Prm = 4;
+	rip_ano_rpc_itf_Login_DoLogin_Ret = 5;
+	rip_ano_rpc_itf_Login_Test1_Prm = 6;
+	rip_ano_rpc_itf_Login_Test1_Ret = 7;
+	rip_ano_rpc_itf_Login_Test2_Prm = 8;
+	rip_rpc_itf_Login_DoLogin_Ret = 9;
+	rip_rpc_itf_Login_Test1_Prm = 10;
+	rip_rpc_itf_Login_Test1_Ret = 11;
+	rip_rpc_itf_Login_Test2_Prm = 12;
+	rip_rpc_itf_Login_Test2_Ret = 13;
+	rip_rpc_itf_MutiTest_SendMsg_Prm = 14;
+	rip_rpc_itf_MutiTest_SendMsg_Ret = 15;
+	rip_rpc_itf_Login_DoLogin_Prm = 16;
+	smn_base_FPkg = 17;
+	smn_base_Call = 18;
+	smn_base_Ret = 19;
+}

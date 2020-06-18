@@ -1,0 +1,8 @@
+{
+    "src":"./",
+    "itf_path":"./rpcitf",
+    "target":{"cpp_c":"./rpc_nitf","cpp_s":"./rpc_nitf"},
+    "proto_path":"./datas/proto",
+    "out_path":"./rpc_nitf",
+    "module":"github.com/ProtossGenius/smntools"
+}

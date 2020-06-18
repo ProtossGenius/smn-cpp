@@ -1,0 +1,152 @@
+boost.asio系列——socket编程
+asio的主要用途还是用于socket编程，本文就以一个tcp的daytimer服务为例简单的演示一下如何实现同步和异步的tcp socket编程。
+
+客户端
+客户端的代码如下：
+
+    #include <iostream>
+    #include <boost/array.hpp>
+    #include <boost/asio.hpp>
+
+    using boost::asio::ip::tcp;
+
+    int main(int argc, char* argv[])
+    {
+        try
+        {
+            boost::asio::io_service io_service;
+            tcp::endpoint end_point(boost::asio::ip::address::from_string("127.0.0.1"), 3200);
+
+            tcp::socketsocket(io_service);
+            socket.connect(end_point);
+
+            for (;;)
+            {
+                boost::array<char, 128> buf;
+                boost::system::error_code error;
+
+                size_t len = socket.read_some(boost::asio::buffer(buf), error);
+
+                if (error == boost::asio::error::eof)
+                    break; // Connection closed cleanly by peer.
+                else if (error)
+                    throw boost::system::system_error(error); // Some other error.
+
+                std::cout.write(buf.data(), len);
+            }
+        }
+        catch (std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
+
+        return 0;
+    }
+
+主要流程如下：
+
+通过tcp::socket类定义一个tcp client对象socket
+通过connect函数连接服务器，打开socket连接。
+通过read_some函数来读数据
+另外，还可以通过write_some来写数据，通过close来关闭socket连接（这里是通过释放socket对象隐式释放连接）。
+
+服务器
+服务器代码如下：
+
+    #include <ctime>
+    #include <iostream>
+    #include <string>
+    #include <boost/asio.hpp>
+
+    using namespace boost;
+    using boost::asio::ip::tcp;
+
+    int main()
+    {
+        try
+        {
+            asio::io_service io_service;
+            tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 3200));
+
+            for (;;)
+            {
+                tcp::socket socket(io_service);
+                acceptor.accept(socket);
+
+                time_t now = time(0);
+                std::string message = ctime(&now);
+
+                system::error_code ignored_error;
+                socket.write_some(asio::buffer(message), ignored_error);
+            }
+        }
+        catch (std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
+
+        return 0;
+    }
+
+主要流程如下：
+
+通过tcp::acceptor类创建一个tcp server对象，并绑定端口（也可以不在构造器中自动绑定，而通过bind函数手动绑定）
+通过accept函数获取远端连接
+通过远端连接的write_some函数将数据发往客户端
+异步服务器
+前面的服务器是同步版本，在大并发的场景下一般需要用到异步socket。服务器的异步版本如下：
+
+    #include <ctime>
+    #include <iostream>
+    #include <string>
+    #include <memory>
+    #include <functional>
+    #include <boost/asio.hpp>
+
+    using boost::asio::ip::tcp;
+    using namespace std;
+
+    void process_client(shared_ptr<tcp::socket> client)
+    {
+        time_t now = time(0);
+        shared_ptr<string> message(new string(ctime(&now)));
+
+        auto callback = [=](const boost::system::error_code& err ,size_t size)
+        {
+            if ((int)size == message->length())
+                cout << "write completed" << endl;
+        };
+
+        client->async_send(boost::asio::buffer(*message), callback);
+    }
+
+    typedef function<void (const boost::system::error_code&)> accept_callback;
+    void start_accept(tcp::acceptor& server)
+    {
+        shared_ptr<tcp::socket> client(new tcp::socket(server.get_io_service()));
+        accept_callback callback = [&server, client](const boost::system::error_code& error)
+            {
+                if (!error)
+                    process_client(client);
+
+                start_accept(server);
+            };
+
+        server.async_accept(*client, callback);
+    }
+
+    int main()
+    {
+        try
+        {
+            boost::asio::io_service io_service;
+            tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 3200));
+            start_accept(acceptor);
+            io_service.run();
+        }
+        catch (std::exception& e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
+        return 0;
+    }
