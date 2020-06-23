@@ -109,10 +109,10 @@ int readPb(std::shared_ptr<Conn> c, Pb& pb){
 }
 
 template<class Pb>
-int writePb(std::shared_ptr<Conn> c, Pb& pb){
+int writePb(std::shared_ptr<Conn> c, const Pb& pb){
 	size_t len = pb.ByteSizeLong();
 	Bytes buff(len);
 	pb.SerializeToArray(buff.arr, len);
-	return smnet::writeLenBytes(c, len, buff.arr);
+	return writeLenBytes(c, len, buff.arr);
 }
 } // namespace smnet

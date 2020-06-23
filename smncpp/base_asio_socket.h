@@ -2,6 +2,7 @@
 #define BASE_ASIO_SOCKET_H_B7IOQTNM
 
 #include <boost/asio.hpp>
+#include <memory>
 #include "socket_itf.h"
 namespace smnet{
 
@@ -10,7 +11,7 @@ enum {BUFF_SIZE = 1024};
 class SMConn :public Conn{
 typedef boost::asio::ip::tcp::socket socket;
 public:
-	SMConn(socket& s, size_t buffSize = BUFF_SIZE):_socket(s), 
+	SMConn(socket s, size_t buffSize = BUFF_SIZE):_socket(std::move(s)), 
 	BuffSize(buffSize), 
 	_buffer(new char[BuffSize]),
 	closeFlag(false){}
@@ -26,9 +27,11 @@ public:
 	const std::exception lastError()const override{
 		return boost::system::system_error(this->_err);
 	}
-
+	socket& getSocket(){
+		return this->_socket;
+	}
 private:
-	socket& _socket;	
+	mutable socket _socket;	
 	const size_t BuffSize;
 	char* _buffer;
 	mutable bool closeFlag;

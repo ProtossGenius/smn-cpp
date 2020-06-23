@@ -53,6 +53,11 @@ private:
 
 class Conn;
 
+bool IS_BIG_EDIAN();
+
+template<typename Struct>
+void netEdianChange(char *pLen);
+
 template<typename Struct>
 int readStruct(std::shared_ptr<Conn> c, Struct& obj);
 
@@ -76,7 +81,7 @@ template<class Pb>
 int readPb(std::shared_ptr<Conn> c, Pb& pb);
 
 template<class Pb>
-int writePb(std::shared_ptr<Conn> c, Pb& pb);
+int writePb(std::shared_ptr<Conn> c, const Pb& pb);
 
 }
 #endif /* end of include guard: SOCKET_MTD_H_J7GWOTFX */
