@@ -18,10 +18,9 @@ bool IS_BIG_EDIAN(){
    return ibe;
 }
 
-template<typename Struct>
-void netEdianChange(char *pLen){
+void netEdianChange(char *pLen, size_t len){
 	if(IS_BIG_EDIAN()){return;}
-	for (int i = 0, j = sizeof(Struct)-1; i < j; ++i, --j){
+	for (int i = 0, j = len-1; i < j; ++i, --j){
 		std::swap(pLen[i], pLen[j]);
 	}
 }
@@ -30,14 +29,14 @@ template<typename Struct>
 int readStruct(std::shared_ptr<Conn> c, Struct& obj){
 	char	*pLen = static_cast<char*>((void*)&obj);
 	int result = c->read(sizeof(Struct), pLen);
-	netEdianChange<Struct>(pLen);
+	netEdianChange(pLen, sizeof(Struct));
 	return result;
 }
 
 template<typename Struct>
 int writeStruct(std::shared_ptr<Conn> c, Struct len){
 	char *pLen = static_cast<char*>((void*)&len);
-	netEdianChange<Struct>(pLen);
+	netEdianChange(pLen, sizeof(Struct));
 	int result = c->write(sizeof(Struct), pLen);
 	return result;
 }
@@ -108,11 +107,4 @@ int readPb(std::shared_ptr<Conn> c, Pb& pb){
 	return ConnStatusSucc;	
 }
 
-template<class Pb>
-int writePb(std::shared_ptr<Conn> c, const Pb& pb){
-	size_t len = pb.ByteSizeLong();
-	Bytes buff(len);
-	pb.SerializeToArray(buff.arr, len);
-	return writeLenBytes(c, len, buff.arr);
-}
 } // namespace smnet

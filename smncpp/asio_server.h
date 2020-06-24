@@ -28,7 +28,7 @@ namespace smnet{
 		typedef  boost::asio::ip::tcp tcp;
 		public:
 			Server(boost::asio::io_service& ioc, short port, std::function<std::shared_ptr<Session>(tcp::socket sock)> sessionMaker):_acceptor(ioc, tcp::endpoint(tcp::v4(), port)),
-	   						_socket(ioc)	{}
+	   						_socket(ioc), _sessionMaker(sessionMaker)	{}
 			~Server(){_acceptor.close();}
 
 			void start();

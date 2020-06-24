@@ -2,7 +2,6 @@
 #define SOCKET_MTD_H_J7GWOTFX
 #include <memory>
 #include <string>
-
 namespace smnet{
 
 class Bytes {
@@ -55,8 +54,7 @@ class Conn;
 
 bool IS_BIG_EDIAN();
 
-template<typename Struct>
-void netEdianChange(char *pLen);
+void netEdianChange(char *pLen, size_t len);
 
 template<typename Struct>
 int readStruct(std::shared_ptr<Conn> c, Struct& obj);
@@ -79,9 +77,6 @@ int readString(std::shared_ptr<Conn> c, std::string& str);
 
 template<class Pb>
 int readPb(std::shared_ptr<Conn> c, Pb& pb);
-
-template<class Pb>
-int writePb(std::shared_ptr<Conn> c, const Pb& pb);
 
 }
 #endif /* end of include guard: SOCKET_MTD_H_J7GWOTFX */
