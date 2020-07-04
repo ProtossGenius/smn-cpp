@@ -40,7 +40,7 @@ shared_ptr<svr_rpc_rpc_itf::Login> NewLoginServer(ip::tcp::socket sock){
 
 int main(){
 	io_service ioc;
-	smnet::Server s(ioc, 700, NewLoginServer);
+	smnet::Server s(ioc, 1000, NewLoginServer);
 	s.start();
 	ioc.run();
 }

@@ -1,8 +1,12 @@
 LIBS=-lprotobuf
 CC=g++
 smn_cpps=$(GOPATH)/src/github.com/ProtossGenius/SureMoonNet/cpppb
+
 cmp_goitf: clean
 	smnrpc-autocode -cfg ./datas/cfgs/testrpc.json
+	cd rpc_nitf/ && make build
+	cd ./cpp/pb && make build
+	cd ./smncpp && make build
 
 build_smncpp:
 	cd ./smncpp && make build
@@ -13,7 +17,7 @@ build_rpcnitf:
 test_boost:
 	cd tests/testboost && make qrun 
 test_proto: cmp_goitf  
-	cd ./pb && make build
+	cd ./cpp/pb && make build
 	cd tests/testproto && make qrun
 
 install:
@@ -23,9 +27,9 @@ build: build_smncpp build_rpcnitf
 clean:
 	cd tests && make clean
 	cd ./smncpp && make clean
-	cd ./pb && make clean
+	cd ./cpp/pb && make clean
 	cd ./rpc_nitf && make clean
-	rm -rf ./smn_itf/*.h
+	rm -rf ./cpp/smn_itf/*.h
 test: test_proto test_boost build 
 
 rely_intall:

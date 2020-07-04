@@ -5,7 +5,10 @@ using namespace std;
 int main(){
 	rip_rpc_itf::Login_DoLogin_Prm prm;
 	prm.set_user("hello");
-	cout << prm.SerializePartialAsString() <<endl;
+	cout <<"SAS["<< prm.SerializeAsString() <<"]"<<endl;
+	cout << "SPAS["<<prm.SerializePartialAsString() <<"]" <<endl;
 	cout << prm.user() << endl;
 	cout <<"hello world" <<endl;
+	rip_rpc_itf::Login_DoLogin_Prm prm2(prm);
+	cout << prm2.user() <<endl;
 }
