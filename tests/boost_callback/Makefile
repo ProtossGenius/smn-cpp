@@ -1,11 +1,7 @@
-debug:
-	gdb run.main
 
-test:
+main.o: main.cpp 
+	cc -Wall -c main.cpp
+sm_build_all: main.o
+sm_clean_o:
+	rm -rf ./*.o
 
-clean:
-	rm -f dump.rdb
-qrun: build
-	./run.main 
-build:
-	g++ -Wall -g *.cpp  -o run.main

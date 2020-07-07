@@ -1,3 +1,10 @@
+
+hello.o: hello.cpp 
+	cc -Wall -c hello.cpp
+sm_build_all: hello.o
+sm_clean_o:
+	rm -rf ./*.o
+##Tail
 clean:
 	rm -f *.o main file
 
@@ -6,5 +13,15 @@ build:
 
 qrun: build
 	./main
+
+
+
+
+
+
+
+
+
+
 
 
