@@ -1,10 +1,10 @@
 
-asio_server.o: asio_server.cpp 
-	cc -Wall -c asio_server.cpp
-base_asio_socket.o: base_asio_socket.cpp 
-	cc -Wall -c base_asio_socket.cpp
-socket_mtd.o: socket_mtd.cpp 
-	cc -Wall -c socket_mtd.cpp
+asio_server.o: asio_server.cpp asio_server.h
+	g++ -Wall -c asio_server.cpp
+base_asio_socket.o: base_asio_socket.cpp base_asio_socket.h
+	g++ -Wall -c base_asio_socket.cpp
+socket_mtd.o: socket_mtd.cpp socket_mtd.h socket_itf.h
+	g++ -Wall -c socket_mtd.cpp
 sm_build_all: asio_server.o base_asio_socket.o socket_mtd.o
 sm_clean_o:
 	rm -rf ./*.o
@@ -15,6 +15,16 @@ clean:
 	rm -rf *.o
 build:clean
 	g++  -Wall -c *.cpp 
+
+
+
+
+
+
+
+
+
+
 
 
 
