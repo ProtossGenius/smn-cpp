@@ -16,23 +16,3 @@ clean:
 	cd ./testboost && make clean
 	cd ./testrpc && make clean
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

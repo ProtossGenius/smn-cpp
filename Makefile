@@ -52,21 +52,3 @@ rely_intall:
 		#smcfg -install libs/boost/download # if download is slow
 	smcfg -install libs/boost
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

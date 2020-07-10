@@ -14,24 +14,3 @@ build:
 qrun: build
 	./main
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

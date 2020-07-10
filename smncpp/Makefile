@@ -16,24 +16,3 @@ clean:
 build:clean
 	g++  -Wall -c *.cpp 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

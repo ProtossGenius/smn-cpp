@@ -19,24 +19,3 @@ build: sm_build_all
 clean:
 	rm -f *.cc *.h *.o
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
