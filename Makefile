@@ -3,23 +3,51 @@ CC=g++
 FLAGS=-Wall -c
 smn_cpps=$(GOPATH)/src/github.com/ProtossGenius/SureMoonNet/cpppb
 ##Head
-sm_build_all: 
+
+sm_build_subdir_0:
 	cd cpp && make sm_build_all
-	cd datas && make sm_build_all
-	cd docs && make sm_build_all
-	cd rpc_nitf && make sm_build_all
-	cd rpcitf && make sm_build_all
-	cd smncpp && make sm_build_all
-	cd tests && make sm_build_all
-sm_clean_o:
-	rm -rf ./*.o
+
+sm_clean_subdir_0:
 	cd cpp && make sm_clean_o
+
+sm_build_subdir_1:
+	cd datas && make sm_build_all
+
+sm_clean_subdir_1:
 	cd datas && make sm_clean_o
+
+sm_build_subdir_2:
+	cd docs && make sm_build_all
+
+sm_clean_subdir_2:
 	cd docs && make sm_clean_o
+
+sm_build_subdir_3:
+	cd rpc_nitf && make sm_build_all
+
+sm_clean_subdir_3:
 	cd rpc_nitf && make sm_clean_o
+
+sm_build_subdir_4:
+	cd rpcitf && make sm_build_all
+
+sm_clean_subdir_4:
 	cd rpcitf && make sm_clean_o
+
+sm_build_subdir_5:
+	cd smncpp && make sm_build_all
+
+sm_clean_subdir_5:
 	cd smncpp && make sm_clean_o
+
+sm_build_subdir_6:
+	cd tests && make sm_build_all
+
+sm_clean_subdir_6:
 	cd tests && make sm_clean_o
+sm_build_all: sm_build_subdir_0 sm_build_subdir_1 sm_build_subdir_2 sm_build_subdir_3 sm_build_subdir_4 sm_build_subdir_5 sm_build_subdir_6
+sm_clean_o: sm_clean_subdir_0 sm_clean_subdir_1 sm_clean_subdir_2 sm_clean_subdir_3 sm_clean_subdir_4 sm_clean_subdir_5 sm_clean_subdir_6
+	rm -rf ./*.o
 ##Tail
 cmp_goitf: clean
 	smnrpc-autocode -cfg ./datas/cfgs/testrpc.json
@@ -43,7 +71,6 @@ clean: sm_clean_o
 	cd ./cpp/pb && make clean
 	cd ./rpc_nitf && make clean
 	rm -rf ./cpp/smn_itf/*.h
-	smake -clean
 test: cmp_goitf smake test_proto test_boost 
 	
 rely_intall:

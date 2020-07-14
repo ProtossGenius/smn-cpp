@@ -1,5 +1,5 @@
 
 sm_build_all: 
-sm_clean_o:
+sm_clean_o: 
 	rm -rf ./*.o
 
