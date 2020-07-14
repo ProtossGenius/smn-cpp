@@ -1,7 +1,5 @@
 
-testproto.o: testproto.cpp pb/rip_rpc_itf.pb.h
-	g++ -Wall -c testproto.cpp
-sm_build_all: testproto.o
+sm_build_all: 
 	cd pb && make sm_build_all
 sm_clean_o:
 	rm -rf ./*.o

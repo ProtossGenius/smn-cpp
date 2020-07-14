@@ -43,6 +43,7 @@ clean: sm_clean_o
 	cd ./cpp/pb && make clean
 	cd ./rpc_nitf && make clean
 	rm -rf ./cpp/smn_itf/*.h
+	smake -clean
 test: cmp_goitf smake test_proto test_boost 
 	
 rely_intall:

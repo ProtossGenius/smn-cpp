@@ -1,7 +1,5 @@
 
-hello.o: hello.cpp 
-	g++ -Wall -c hello.cpp
-sm_build_all: hello.o
+sm_build_all: 
 sm_clean_o:
 	rm -rf ./*.o
 ##Tail
