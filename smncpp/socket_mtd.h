@@ -2,51 +2,40 @@
 #define SOCKET_MTD_H_J7GWOTFX
 #include <memory>
 #include <string>
+#include <atomic>
 namespace smnet{
 
 class Bytes {
 public:
 	Bytes():arr(nullptr), _cnt(nullptr), _len(0){}
-	Bytes(size_t len):arr(new char[len]), _cnt(new int(1)), _len(len){}
+	Bytes(size_t len):arr(new char[len]), _cnt(new std::atomic_int(1)), _len(len){}
 	Bytes(const Bytes& bytes):arr(bytes.arr), _cnt(bytes._cnt), _len(bytes._len){++(*this->_cnt);}
 	Bytes(Bytes&& bytes):arr(bytes.arr), _cnt(bytes._cnt), _len(bytes._len){bytes.arr = nullptr; bytes._cnt = nullptr;}
-	~Bytes(){
-		drop();	
-	}
-	void drop(){
-		if (this->_cnt == nullptr){return;}
-		--(*this->_cnt);
-		if ((*this->_cnt) == 0){
-			delete this->_cnt;
-			delete[] this->arr;
-		}
-	}
+	~Bytes();
 	Bytes& operator= (const Bytes& bytes){
-		if (this == &bytes){return *this;}
-		drop();
-		this->arr = bytes.arr;
-		this->_cnt = bytes._cnt;
-		this->_len = bytes._len;
-		++(*this->_cnt);
+		Bytes tmp(bytes);
+		this->swap(tmp);//get bytes's copy and swap and drop old data..
 		return *this;
 	}
 
 	Bytes& operator= (Bytes&& bytes){
 		if (this == &bytes){return *this;}
-		drop();
-		this->arr = bytes.arr;
-		this->_cnt = bytes._cnt;
-		this->_len = bytes._len;
-		bytes.arr = nullptr;
-		bytes._cnt = nullptr;
+		Bytes zero;
+		this->swap(bytes);//get bytes's value.
+		bytes.swap(zero);//drop this->old data; make right-value save.
 		return *this;
 	}
 
+	void swap(Bytes& rhs){
+		std::swap(rhs.arr, this->arr);
+		std::swap(rhs._cnt, this->_cnt);
+		std::swap(rhs._len, this->_len);
+	}
 	size_t size(){return _len;}
 public:
 	char* arr;
 private:
-	int* _cnt;
+	std::atomic_int* _cnt;
 	size_t _len;
 };
 

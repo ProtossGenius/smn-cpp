@@ -1,6 +1,16 @@
 #include "socket_mtd.h"
 #include "socket_itf.h"
 namespace smnet{
+
+	Bytes::~Bytes(){
+		if (this->_cnt == nullptr){return;}
+		--(*this->_cnt);
+		if ((*this->_cnt) == 0){
+			delete this->_cnt;
+			delete[] this->arr;
+		}
+	}
+
 bool isBigEndian(void){
 	typedef union {
 	    int i;

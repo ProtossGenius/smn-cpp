@@ -15,11 +15,11 @@ namespace smnet{
 			virtual ~Session(){_conn->close();}
 
 		public:
-			virtual void run() = 0;
 			void start() {
 				run();
 			}
 		protected:
+			virtual void run() = 0;
 			std::shared_ptr<SMConn> _conn;
 	};
 

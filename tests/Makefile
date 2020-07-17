@@ -1,10 +1,10 @@
 
 
 sm_build_subdir_0:
-	cd boost_callback && make sm_build_all
+	cd anyTest && make sm_build_all
 
 sm_clean_subdir_0:
-	cd boost_callback && make sm_clean_o
+	cd anyTest && make sm_clean_o
 
 sm_build_subdir_1:
 	cd testboost && make sm_build_all
