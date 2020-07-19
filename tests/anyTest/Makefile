@@ -10,3 +10,6 @@ qrun: sm_build_all
 	g++ ./*.o -o run.main
 	./run.main
 
+clean:
+	rm -rf ./run.main ./*.o
+

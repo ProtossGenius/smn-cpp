@@ -3,6 +3,7 @@
 
 #include <queue>
 #include <boost/thread/mutex.hpp>
+#include <mutex>
 
 namespace smnet{
 	template<typename Type>
@@ -12,24 +13,24 @@ namespace smnet{
 
 		public:
 			void push(const Type& val){
-				boost::mutex::scoped_lock(_tsafe);
+				boost::mutex::scoped_lock _(_tsafe);
 				unlockRL();
 				_quu.push(val);
 			}
 
 			void emplace(Type&& val){
-				boost::mutex::scoped_lock(_tsafe);
+				boost::mutex::scoped_lock _(_tsafe);
 				unlockRL();
 				_quu.emplace(val);
 			}
 
 			bool empty(){
-				boost::mutex::scoped_lock(_tsafe);
+				boost::mutex::scoped_lock _(_tsafe);
 				return _quu.empty();
 			}
 
 			size_t size(){
-				boost::mutex::scoped_lock(_tsafe);
+				boost::mutex::scoped_lock _(_tsafe);
 				return _quu.size();
 			}
 
@@ -37,7 +38,7 @@ namespace smnet{
 			Type one_thread_get(){
 				bool shouldLock = false;
 				{//check if need Lock;
-					boost::mutex::scoped_lock(_tsafe);
+					boost::mutex::scoped_lock _(_tsafe);
 					if (_quu.empty()){
 						shouldLock = true;
 					}
@@ -47,9 +48,9 @@ namespace smnet{
 					lockRL();
 				}
 
-				Type&& res;
+				Type res;
 				{
-					boost::mutex::scoped_lock(_tsafe);
+					boost::mutex::scoped_lock _(_tsafe);
 					res = std::move(_quu.front());
 					_quu.pop();
 					//if after push the queque empty, and make sure the readLock only lock once.(if lock once not block.)
@@ -74,7 +75,7 @@ namespace smnet{
 		private:
 			std::queue<Type> _quu;
 			boost::mutex _tsafe;//for thread safe.
-			boost::mutex _readLock;
+			std::mutex _readLock;
 	};
 }
 
