@@ -38,6 +38,23 @@ namespace smnet{
 			}
 
 			void emplace(Type&& val){
+				bool noSpace = false;
+				{
+					boost::mutex::scoped_lock _(_tsafe);
+					if (_MAX_SIZE == 0 || _quu.size() == _MAX_SIZE - 1){
+						noSpace = true;
+					}
+					if(_MAX_SIZE != 0 && _quu.empty()){
+						queueNotEmpty(); //because will push one value.
+					}
+					_quu.emplace(val);
+
+				}
+
+				if(noSpace){
+					canNotWriteIn();
+				}
+
 			}
 
 			bool empty(){
