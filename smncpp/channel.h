@@ -9,19 +9,35 @@ namespace smnet{
 	template<typename Type>
 	class channel {
 		public:
-			channel(){_readLock.lock();}
+			channel(size_t maxSize = 0):_MAX_SIZE(maxSize){
+				if(_MAX_SIZE == 0){
+					canNotWriteIn();
+				}else{
+					queueEmpty();
+				}
+			}
 
 		public:
 			void push(const Type& val){
-				boost::mutex::scoped_lock _(_tsafe);
-				unlockRL();
-				_quu.push(val);
+				bool noSpace = false;
+				{
+					boost::mutex::scoped_lock _(_tsafe);
+					if (_MAX_SIZE == 0 || _quu.size() == _MAX_SIZE - 1){
+						noSpace = true;
+					}
+					if(_MAX_SIZE != 0 && _quu.empty()){
+						queueNotEmpty(); //because will push one value.
+					}
+					_quu.push(val);
+
+				}
+
+				if(noSpace){
+					canNotWriteIn();
+				}
 			}
 
 			void emplace(Type&& val){
-				boost::mutex::scoped_lock _(_tsafe);
-				unlockRL();
-				_quu.emplace(val);
 			}
 
 			bool empty(){
@@ -36,46 +52,51 @@ namespace smnet{
 
 			//one_thread_get should only call from one thread. it's not thread-safe. or willcaused dead lock.
 			Type one_thread_get(){
-				bool shouldLock = false;
+				bool isQueueEmpty = false;
 				{//check if need Lock;
 					boost::mutex::scoped_lock _(_tsafe);
-					if (_quu.empty()){
-						shouldLock = true;
+					if(_MAX_SIZE == 0 || _quu.size() == _MAX_SIZE-1){
+						canWriteIn();
+					}
+					if (_MAX_SIZE != 0 && _quu.empty()){
+						isQueueEmpty = true;
 					}
 				}
 
-				if(shouldLock){
-					lockRL();
+				if(isQueueEmpty){
+					queueEmpty();
 				}
 
 				Type res;
 				{
 					boost::mutex::scoped_lock _(_tsafe);
-					res = std::move(_quu.front());
+					res = _quu.front();
 					_quu.pop();
-					//if after push the queque empty, and make sure the readLock only lock once.(if lock once not block.)
-					if(_quu.empty()){ 
-						unlockRL();
-						unlockRL();
-						lockRL();
-					}
 				}
 
 				return res;
 			}
 		private:
-			void lockRL(){
+			void queueEmpty(){
 				_readLock.lock();
 			}
 
-			void unlockRL(){
+			void queueNotEmpty(){
 				_readLock.unlock();
 			}
-
+			
+			void canNotWriteIn(){
+				_writeLock.lock();
+			}
+			void canWriteIn(){
+				_writeLock.unlock();
+			}
 		private:
+			const size_t _MAX_SIZE;
 			std::queue<Type> _quu;
 			boost::mutex _tsafe;//for thread safe.
-			std::mutex _readLock;
+			std::mutex _readLock;    //read means read from channel;
+			std::mutex _writeLock;   //write means write to channel;
 	};
 }
 

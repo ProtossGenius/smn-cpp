@@ -6,18 +6,39 @@
 #include "smncpp/channel.h"
 using namespace std;
 
-smnet::channel<int> chan;
+smnet::channel<int> chan{500};
 
 void fillNum(int id){
-	for (int i = 0; i < 10; ++i){
+	for (int i = 0; i < 10000; ++i){
 		chan.push(id * 10000 + i);
 	}
 }
 
 void getNum(){
-	for(int i = 0; i < 1000; ++i){
+	vector<vector<int> > result(100);
+	bool ooo = false;
+	for(int i = 0; i < 1000000; ++i){
+		if(ooo){
+			cout << "ooo: before read" << endl;
+		}
 		int val = chan.one_thread_get();
-		cout << val <<endl;
+		if(ooo){
+			cout << "ooo: get value = " << val << endl;
+		}
+		int idx = val / 10000, idv = val % 10000;
+		result[idx].push_back(idv);
+		auto& cur = result[idx];
+		auto size =  cur.size();
+		if(size == 1 && idv != 0){
+			cout << "===== " << val <<endl;
+			throw runtime_error("first number not zero.");
+		}
+		if(size > 1 && cur[size-1] - cur[size-2] != 1){
+			cout << "out of order: idx = " << idx <<" , last = " << cur[size-2] << " , cur = "
+				<< cur[size-1] <<endl;
+			ooo = true;
+			//throw runtime_error("out of order.");
+		}
 	}
 }
 

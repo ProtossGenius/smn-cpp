@@ -54,10 +54,12 @@ cmp_goitf: clean
 
 test_boost: sm_build_all 
 	cd tests/testboost && make qrun 
-test_proto: sm_build_all
+test_proto: cmp_goitf smake sm_build_all
 	cd ./cpp/pb && make build
 	cd tests/testproto && make qrun
 
+test_channal: sm_build_all
+	cd ./tests/testchannal && make qrun
 install:
 
 build: sm_build_all 
@@ -71,7 +73,7 @@ clean: sm_clean_o
 	cd ./cpp/pb && make clean
 	cd ./rpc_nitf && make clean
 	rm -rf ./cpp/smn_itf/*.h
-test: cmp_goitf smake test_proto test_boost 
+test:  test_proto test_boost test_channal
 	
 rely_intall:
 	#boost

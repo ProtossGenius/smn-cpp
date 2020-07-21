@@ -13,8 +13,8 @@ sm_clean_o: sm_clean_subdir_0
 ##Tail
 
 qrun: sm_build_all
-	g++ ./*.o -lpthread -o run.main -lboost_thread
-	./run.main
+	g++ -g ./*.o -lpthread -o run.main -lboost_thread
+	time  ./run.main
 
 clean:
 	rm -rf ./*.o  ./run.main
