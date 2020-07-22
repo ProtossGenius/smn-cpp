@@ -1,37 +1,25 @@
 
+sm_build: 
+	+make -C anyTest sm_build
+	+make -C testboost sm_build
+	+make -C testchannal sm_build
+	+make -C testproto sm_build
+	+make -C testrpc sm_build
 
-sm_build_subdir_0:
-	cd anyTest && make sm_build_all
+sm_build_all: 
+	+make -C anyTest sm_build_all
+	+make -C testboost sm_build_all
+	+make -C testchannal sm_build_all
+	+make -C testproto sm_build_all
+	+make -C testrpc sm_build_all
 
-sm_clean_subdir_0:
-	cd anyTest && make sm_clean_o
-
-sm_build_subdir_1:
-	cd testboost && make sm_build_all
-
-sm_clean_subdir_1:
-	cd testboost && make sm_clean_o
-
-sm_build_subdir_2:
-	cd testchannal && make sm_build_all
-
-sm_clean_subdir_2:
-	cd testchannal && make sm_clean_o
-
-sm_build_subdir_3:
-	cd testproto && make sm_build_all
-
-sm_clean_subdir_3:
-	cd testproto && make sm_clean_o
-
-sm_build_subdir_4:
-	cd testrpc && make sm_build_all
-
-sm_clean_subdir_4:
-	cd testrpc && make sm_clean_o
-sm_build_all: sm_build_subdir_0 sm_build_subdir_1 sm_build_subdir_2 sm_build_subdir_3 sm_build_subdir_4
-sm_clean_o: sm_clean_subdir_0 sm_clean_subdir_1 sm_clean_subdir_2 sm_clean_subdir_3 sm_clean_subdir_4
+sm_clean_o:
 	rm -rf ./*.o
+	+make -C anyTest sm_clean_o
+	+make -C testboost sm_clean_o
+	+make -C testchannal sm_clean_o
+	+make -C testproto sm_clean_o
+	+make -C testrpc sm_clean_o
 ##Tail
 clean:
 	cd ./testproto && make clean

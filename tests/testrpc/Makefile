@@ -3,21 +3,18 @@ client.o: client.cpp smncpp/socket_mtd.h smncpp/base_asio_socket.h smncpp/asio_s
 	g++ -Wall -c client.cpp
 server.o: server.cpp smncpp/socket_mtd.h smncpp/base_asio_socket.h smncpp/asio_server.h pb/rip_rpc_itf.pb.h pb/smn_base.pb.h pb/smn_dict.pb.h smn_itf/rpc_itf.Login.h rpc_nitf/rpc_itf.svr.Login.h
 	g++ -Wall -c server.cpp
+sm_build: client.o server.o
 
-sm_build_subdir_0:
-	cd pb && make sm_build_all
 
-sm_build_subdir_1:
-	cd rpc_nitf && make sm_build_all
+sm_build_all: client.o server.o
+	+make -C pb sm_build_all
+	+make -C rpc_nitf sm_build_all
+	+make -C smn_itf sm_build_all
+	+make -C smncpp sm_build_all
 
-sm_build_subdir_2:
-	cd smn_itf && make sm_build_all
-
-sm_build_subdir_3:
-	cd smncpp && make sm_build_all
-sm_build_all: client.o server.o sm_build_subdir_0 sm_build_subdir_1 sm_build_subdir_2 sm_build_subdir_3
-sm_clean_o: 
+sm_clean_o:
 	rm -rf ./*.o
+
 ##Tail
 debug:
 test:

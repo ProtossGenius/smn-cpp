@@ -1,17 +1,14 @@
 
+sm_build: 
+	+make -C cfgs sm_build
+	+make -C proto sm_build
 
-sm_build_subdir_0:
-	cd cfgs && make sm_build_all
+sm_build_all: 
+	+make -C cfgs sm_build_all
+	+make -C proto sm_build_all
 
-sm_clean_subdir_0:
-	cd cfgs && make sm_clean_o
-
-sm_build_subdir_1:
-	cd proto && make sm_build_all
-
-sm_clean_subdir_1:
-	cd proto && make sm_clean_o
-sm_build_all: sm_build_subdir_0 sm_build_subdir_1
-sm_clean_o: sm_clean_subdir_0 sm_clean_subdir_1
+sm_clean_o:
 	rm -rf ./*.o
+	+make -C cfgs sm_clean_o
+	+make -C proto sm_clean_o
 

@@ -1,17 +1,14 @@
 
+sm_build: 
+	+make -C ano_rpc_itf sm_build
+	+make -C rpc_itf sm_build
 
-sm_build_subdir_0:
-	cd ano_rpc_itf && make sm_build_all
+sm_build_all: 
+	+make -C ano_rpc_itf sm_build_all
+	+make -C rpc_itf sm_build_all
 
-sm_clean_subdir_0:
-	cd ano_rpc_itf && make sm_clean_o
-
-sm_build_subdir_1:
-	cd rpc_itf && make sm_build_all
-
-sm_clean_subdir_1:
-	cd rpc_itf && make sm_clean_o
-sm_build_all: sm_build_subdir_0 sm_build_subdir_1
-sm_clean_o: sm_clean_subdir_0 sm_clean_subdir_1
+sm_clean_o:
 	rm -rf ./*.o
+	+make -C ano_rpc_itf sm_clean_o
+	+make -C rpc_itf sm_clean_o
 

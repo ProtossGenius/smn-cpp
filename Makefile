@@ -3,69 +3,47 @@ CC=g++
 FLAGS=-Wall -c
 smn_cpps=$(GOPATH)/src/github.com/ProtossGenius/SureMoonNet/cpppb
 ##Head
+sm_build: 
+	+make -C cpp sm_build
+	+make -C datas sm_build
+	+make -C docs sm_build
+	+make -C rpc_nitf sm_build
+	+make -C rpcitf sm_build
+	+make -C smncpp sm_build
+	+make -C tests sm_build
 
-sm_build_subdir_0:
-	cd cpp && make sm_build_all
+sm_build_all: 
+	+make -C cpp sm_build_all
+	+make -C datas sm_build_all
+	+make -C docs sm_build_all
+	+make -C rpc_nitf sm_build_all
+	+make -C rpcitf sm_build_all
+	+make -C smncpp sm_build_all
+	+make -C tests sm_build_all
 
-sm_clean_subdir_0:
-	cd cpp && make sm_clean_o
-
-sm_build_subdir_1:
-	cd datas && make sm_build_all
-
-sm_clean_subdir_1:
-	cd datas && make sm_clean_o
-
-sm_build_subdir_2:
-	cd docs && make sm_build_all
-
-sm_clean_subdir_2:
-	cd docs && make sm_clean_o
-
-sm_build_subdir_3:
-	cd rpc_nitf && make sm_build_all
-
-sm_clean_subdir_3:
-	cd rpc_nitf && make sm_clean_o
-
-sm_build_subdir_4:
-	cd rpcitf && make sm_build_all
-
-sm_clean_subdir_4:
-	cd rpcitf && make sm_clean_o
-
-sm_build_subdir_5:
-	cd smncpp && make sm_build_all
-
-sm_clean_subdir_5:
-	cd smncpp && make sm_clean_o
-
-sm_build_subdir_6:
-	cd tests && make sm_build_all
-
-sm_clean_subdir_6:
-	cd tests && make sm_clean_o
-sm_build_all: sm_build_subdir_0 sm_build_subdir_1 sm_build_subdir_2 sm_build_subdir_3 sm_build_subdir_4 sm_build_subdir_5 sm_build_subdir_6
-sm_clean_o: sm_clean_subdir_0 sm_clean_subdir_1 sm_clean_subdir_2 sm_clean_subdir_3 sm_clean_subdir_4 sm_clean_subdir_5 sm_clean_subdir_6
+sm_clean_o:
 	rm -rf ./*.o
+	+make -C cpp sm_clean_o
+	+make -C datas sm_clean_o
+	+make -C docs sm_clean_o
+	+make -C rpc_nitf sm_clean_o
+	+make -C rpcitf sm_clean_o
+	+make -C smncpp sm_clean_o
+	+make -C tests sm_clean_o
 ##Tail
-cmp_goitf: clean
+cmp_goitf: 
 	smnrpc-autocode -cfg ./datas/cfgs/testrpc.json
 
 test_boost: sm_build_all 
-	cd tests/testboost && make qrun 
-test_proto: cmp_goitf smake sm_build_all
-	cd ./cpp/pb && make build
-	cd tests/testproto && make qrun
+	+make -C tests/testboost qrun 
+test_proto: sm_build_all
+	+make -C tests/testproto qrun
 
 test_channal: sm_build_all
-	cd ./tests/testchannal && make qrun
+	+make -C tests/testchannal qrun
 install:
 
 build: sm_build_all 
-
-smake:
-	smake
 
 clean: sm_clean_o
 	cd tests && make clean
@@ -74,8 +52,13 @@ clean: sm_clean_o
 	cd ./rpc_nitf && make clean
 	rm -rf ./cpp/smn_itf/*.h
 	rm -rf ./datas/proto/*.proto
-test:  test_proto test_boost test_channal
-	
+dotest: test_proto test_boost test_channal 
+
+test:  cmp_goitf 
+	smake
+	make sm_build -j8
+	make dotest -j8
+
 rely_intall:
 	#boost
 		#go get -u github.com/ProtossGenius/smntools/cmd/smcfg

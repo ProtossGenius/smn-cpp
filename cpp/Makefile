@@ -1,17 +1,14 @@
 
+sm_build: 
+	+make -C pb sm_build
+	+make -C smn_itf sm_build
 
-sm_build_subdir_0:
-	cd pb && make sm_build_all
+sm_build_all: 
+	+make -C pb sm_build_all
+	+make -C smn_itf sm_build_all
 
-sm_clean_subdir_0:
-	cd pb && make sm_clean_o
-
-sm_build_subdir_1:
-	cd smn_itf && make sm_build_all
-
-sm_clean_subdir_1:
-	cd smn_itf && make sm_clean_o
-sm_build_all: sm_build_subdir_0 sm_build_subdir_1
-sm_clean_o: sm_clean_subdir_0 sm_clean_subdir_1
+sm_clean_o:
 	rm -rf ./*.o
+	+make -C pb sm_clean_o
+	+make -C smn_itf sm_clean_o
 

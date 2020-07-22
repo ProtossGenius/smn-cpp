@@ -9,15 +9,15 @@ socket_itf.o: socket_itf.cpp socket_itf.h
 	g++ -Wall -c socket_itf.cpp
 socket_mtd.o: socket_mtd.cpp socket_mtd.h socket_itf.h
 	g++ -Wall -c socket_mtd.cpp
+sm_build: asio_server.o base_asio_socket.o muti-service.o socket_itf.o socket_mtd.o
+	+make -C pb sm_build
 
-sm_build_subdir_0:
-	cd pb && make sm_build_all
+sm_build_all: asio_server.o base_asio_socket.o muti-service.o socket_itf.o socket_mtd.o
+	+make -C pb sm_build_all
 
-sm_clean_subdir_0:
-	cd pb && make sm_clean_o
-sm_build_all: asio_server.o base_asio_socket.o muti-service.o socket_itf.o socket_mtd.o sm_build_subdir_0
-sm_clean_o: sm_clean_subdir_0
+sm_clean_o:
 	rm -rf ./*.o
+	+make -C pb sm_clean_o
 ##Tail
 test:
 
