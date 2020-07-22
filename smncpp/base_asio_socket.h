@@ -22,7 +22,13 @@ public:
 		}
 	}
 	const int read(size_t n, char * bytes) const override;
+	const int read(Bytes data) const override{
+		return read(data.size(), data.arr);
+	}
 	const int write(size_t n, const char *bytes) const override;
+	const int write(Bytes data) const override{
+		return write(data.size(), data.arr);
+	}
 	const void close() const override;
 	const std::exception lastError()const override{
 		return boost::system::system_error(this->_err);

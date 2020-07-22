@@ -9,7 +9,7 @@ namespace smnet{
 	template<typename Type>
 	class channel {
 		public:
-			channel(size_t maxSize = 0):_MAX_SIZE(maxSize){
+			channel(size_t maxSize = 0):_MAX_SIZE(maxSize), _exp(nullptr), _alive(true){
 				if(_MAX_SIZE == 0){
 					canNotWriteIn();
 				}else{
@@ -67,8 +67,12 @@ namespace smnet{
 				return _quu.size();
 			}
 
+			void setExport(Type* out){
+				_exp = out;
+			}
+
 			//one_thread_get should only call from one thread. it's not thread-safe. or willcaused dead lock.
-			Type one_thread_get(){
+			void one_thread_get(){
 				bool isQueueEmpty = false;
 				{//check if need Lock;
 					boost::mutex::scoped_lock _(_tsafe);
@@ -84,14 +88,21 @@ namespace smnet{
 					queueEmpty();
 				}
 
-				Type res;
 				{
 					boost::mutex::scoped_lock _(_tsafe);
-					res = _quu.front();
+					(*_exp) = std::move(_quu.front());
 					_quu.pop();
 				}
+			}
 
-				return res;
+			void close(){
+				boost::mutex::scoped_lock _(_tsafe);
+				_alive = false;
+			}
+
+			bool alive(){
+				boost::mutex::scoped_lock _(_tsafe);
+				return _alive;
 			}
 		private:
 			void queueEmpty(){
@@ -114,7 +125,14 @@ namespace smnet{
 			boost::mutex _tsafe;//for thread safe.
 			std::mutex _readLock;    //read means read from channel;
 			std::mutex _writeLock;   //write means write to channel;
+			Type* _exp;
+			bool _alive;
 	};
+
+	template<typename Type>
+	std::shared_ptr<channel<Type> > make_chan(size_t maxSize = 0){
+		return std::make_shared<channel<Type> >(maxSize);
+	}
 }
 
 #endif /* end of include guard: CHANNEL_H_IZJI8D3M */

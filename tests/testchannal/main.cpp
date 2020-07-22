@@ -17,8 +17,9 @@ void fillNum(int id){
 void getNum(){
 	vector<vector<int> > result(100);
 	int val;
+	chan.setExport(&val);
 	for(int i = 0; i < 1000000; ++i){
-		val = chan.one_thread_get();
+		chan.one_thread_get();
 		int idx = val / 10000, idv = val % 10000;
 		result[idx].push_back(idv);
 		auto& cur = result[idx];

@@ -5,10 +5,18 @@ base_asio_socket.o: base_asio_socket.cpp base_asio_socket.h
 	g++ -Wall -c base_asio_socket.cpp
 muti-service.o: muti-service.cpp muti-service.h socket_itf.h socket_mtd.h
 	g++ -Wall -c muti-service.cpp
+socket_itf.o: socket_itf.cpp socket_itf.h
+	g++ -Wall -c socket_itf.cpp
 socket_mtd.o: socket_mtd.cpp socket_mtd.h socket_itf.h
 	g++ -Wall -c socket_mtd.cpp
-sm_build_all: asio_server.o base_asio_socket.o muti-service.o socket_mtd.o
-sm_clean_o: 
+
+sm_build_subdir_0:
+	cd pb && make sm_build_all
+
+sm_clean_subdir_0:
+	cd pb && make sm_clean_o
+sm_build_all: asio_server.o base_asio_socket.o muti-service.o socket_itf.o socket_mtd.o sm_build_subdir_0
+sm_clean_o: sm_clean_subdir_0
 	rm -rf ./*.o
 ##Tail
 test:
