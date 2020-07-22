@@ -7,28 +7,16 @@ server.o: server.cpp smncpp/socket_mtd.h smncpp/base_asio_socket.h smncpp/asio_s
 sm_build_subdir_0:
 	cd pb && make sm_build_all
 
-sm_clean_subdir_0:
-	cd pb && make sm_clean_o
-
 sm_build_subdir_1:
 	cd rpc_nitf && make sm_build_all
-
-sm_clean_subdir_1:
-	cd rpc_nitf && make sm_clean_o
 
 sm_build_subdir_2:
 	cd smn_itf && make sm_build_all
 
-sm_clean_subdir_2:
-	cd smn_itf && make sm_clean_o
-
 sm_build_subdir_3:
 	cd smncpp && make sm_build_all
-
-sm_clean_subdir_3:
-	cd smncpp && make sm_clean_o
 sm_build_all: client.o server.o sm_build_subdir_0 sm_build_subdir_1 sm_build_subdir_2 sm_build_subdir_3
-sm_clean_o: sm_clean_subdir_0 sm_clean_subdir_1 sm_clean_subdir_2 sm_clean_subdir_3
+sm_clean_o: 
 	rm -rf ./*.o
 ##Tail
 debug:

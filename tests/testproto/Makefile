@@ -4,11 +4,8 @@ testproto.o: testproto.cpp pb/rip_rpc_itf.pb.h
 
 sm_build_subdir_0:
 	cd pb && make sm_build_all
-
-sm_clean_subdir_0:
-	cd pb && make sm_clean_o
 sm_build_all: testproto.o sm_build_subdir_0
-sm_clean_o: sm_clean_subdir_0
+sm_clean_o: 
 	rm -rf ./*.o
 ##Tail
 build:

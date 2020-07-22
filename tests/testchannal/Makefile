@@ -4,11 +4,8 @@ main.o: main.cpp smncpp/channel.h
 
 sm_build_subdir_0:
 	cd smncpp && make sm_build_all
-
-sm_clean_subdir_0:
-	cd smncpp && make sm_clean_o
 sm_build_all: main.o sm_build_subdir_0
-sm_clean_o: sm_clean_subdir_0
+sm_clean_o: 
 	rm -rf ./*.o
 ##Tail
 
