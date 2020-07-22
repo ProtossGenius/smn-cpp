@@ -9,7 +9,8 @@ class Bytes {
 public:
 	Bytes():arr(nullptr), _cnt(nullptr), _len(0){}
 	Bytes(size_t len):arr(new char[len]), _cnt(new std::atomic_int(1)), _len(len){}
-	Bytes(const Bytes& bytes):arr(bytes.arr), _cnt(bytes._cnt), _len(bytes._len){++(*this->_cnt);}
+	Bytes(size_t len, char* arr):arr(arr), _cnt(nullptr), _len(len){}
+	Bytes(const Bytes& bytes):arr(bytes.arr), _cnt(bytes._cnt), _len(bytes._len){if(nullptr != this->_cnt){	++(*this->_cnt);}	}
 	Bytes(Bytes&& bytes):arr(bytes.arr), _cnt(bytes._cnt), _len(bytes._len){bytes.arr = nullptr; bytes._cnt = nullptr;}
 	~Bytes();
 	Bytes& operator= (const Bytes& bytes);
