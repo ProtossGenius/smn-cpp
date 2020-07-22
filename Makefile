@@ -73,7 +73,7 @@ clean: sm_clean_o
 	cd ./cpp/pb && make clean
 	cd ./rpc_nitf && make clean
 	rm -rf ./cpp/smn_itf/*.h
-	rm -rf ./datas/proto
+	rm -rf ./datas/proto/*.proto
 test:  test_proto test_boost test_channal
 	
 rely_intall:
