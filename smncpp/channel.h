@@ -2,8 +2,9 @@
 #define CHANNEL_H_IZJI8D3M
 
 #include <queue>
-#include <boost/thread/mutex.hpp>
+#include <memory>
 #include <mutex>
+#include "lockm.h"
 
 namespace smnet{
 	template<typename Type>
@@ -21,7 +22,7 @@ namespace smnet{
 			void push(const Type& val){
 				bool noSpace = false;
 				{
-					boost::mutex::scoped_lock _(_tsafe);
+					SMLockMgr _(_tsafe);
 					if (_MAX_SIZE == 0 || _quu.size() == _MAX_SIZE - 1){
 						noSpace = true;
 					}
@@ -40,7 +41,7 @@ namespace smnet{
 			void emplace(Type&& val){
 				bool noSpace = false;
 				{
-					boost::mutex::scoped_lock _(_tsafe);
+					SMLockMgr _(_tsafe);
 					if (_MAX_SIZE == 0 || _quu.size() == _MAX_SIZE - 1){
 						noSpace = true;
 					}
@@ -58,12 +59,12 @@ namespace smnet{
 			}
 
 			bool empty(){
-				boost::mutex::scoped_lock _(_tsafe);
+				SMLockMgr _(_tsafe);
 				return _quu.empty();
 			}
 
 			size_t size(){
-				boost::mutex::scoped_lock _(_tsafe);
+				SMLockMgr _(_tsafe);
 				return _quu.size();
 			}
 
@@ -75,7 +76,7 @@ namespace smnet{
 			void one_thread_get(){
 				bool isQueueEmpty = false;
 				{//check if need Lock;
-					boost::mutex::scoped_lock _(_tsafe);
+					SMLockMgr _(_tsafe);
 					if(_MAX_SIZE == 0 || _quu.size() == _MAX_SIZE-1){
 						canWriteIn();
 					}
@@ -89,19 +90,19 @@ namespace smnet{
 				}
 
 				{
-					boost::mutex::scoped_lock _(_tsafe);
+					SMLockMgr _(_tsafe);
 					(*_exp) = std::move(_quu.front());
 					_quu.pop();
 				}
 			}
 
 			void close(){
-				boost::mutex::scoped_lock _(_tsafe);
+				SMLockMgr _(_tsafe);
 				_alive = false;
 			}
 
 			bool alive(){
-				boost::mutex::scoped_lock _(_tsafe);
+				SMLockMgr _(_tsafe);
 				return _alive;
 			}
 		private:
@@ -122,7 +123,7 @@ namespace smnet{
 		private:
 			const size_t _MAX_SIZE;
 			std::queue<Type> _quu;
-			boost::mutex _tsafe;//for thread safe.
+			std::mutex _tsafe;//for thread safe.
 			std::mutex _readLock;    //read means read from channel;
 			std::mutex _writeLock;   //write means write to channel;
 			Type* _exp;
