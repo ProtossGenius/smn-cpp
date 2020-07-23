@@ -7,7 +7,7 @@ ano_rpc_itf.clt.MutiTest.o: ano_rpc_itf.clt.MutiTest.cpp ano_rpc_itf.clt.MutiTes
 	g++ -Wall -c ano_rpc_itf.clt.MutiTest.cpp
 ano_rpc_itf.svr.Login.o: ano_rpc_itf.svr.Login.cpp ano_rpc_itf.svr.Login.h smncpp/socket_mtd.h pb/smn_dict.pb.h pb/rip_ano_rpc_itf.pb.h pb/smn_base.pb.h
 	g++ -Wall -c ano_rpc_itf.svr.Login.cpp
-ano_rpc_itf.svr.MutiTest.o: ano_rpc_itf.svr.MutiTest.cpp ano_rpc_itf.svr.MutiTest.h smncpp/socket_mtd.h pb/smn_dict.pb.h pb/rip_ano_rpc_itf.pb.h pb/smn_base.pb.h
+ano_rpc_itf.svr.MutiTest.o: ano_rpc_itf.svr.MutiTest.cpp ano_rpc_itf.svr.MutiTest.h smncpp/socket_mtd.h pb/smn_base.pb.h pb/smn_dict.pb.h pb/rip_ano_rpc_itf.pb.h
 	g++ -Wall -c ano_rpc_itf.svr.MutiTest.cpp
 rpc_itf.clt.Login.o: rpc_itf.clt.Login.cpp rpc_itf.clt.Login.h smncpp/socket_itf.h smncpp/socket_mtd.h pb/smn_base.pb.h pb/rip_rpc_itf.pb.h pb/smn_dict.pb.h
 	g++ -Wall -c rpc_itf.clt.Login.cpp
