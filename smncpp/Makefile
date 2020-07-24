@@ -5,11 +5,11 @@ base_asio_socket.o: base_asio_socket.cpp base_asio_socket.h
 	g++ -Wall -c base_asio_socket.cpp
 muti-service.o: muti-service.cpp muti-service.h socket_itf.h socket_mtd.h
 	g++ -Wall -c muti-service.cpp
-ptr_chan.o: ptr_chan.cpp ptr_chan.h lockm.h
+ptr_chan.o: ptr_chan.cpp lockm.h ptr_chan.h
 	g++ -Wall -c ptr_chan.cpp
 socket_itf.o: socket_itf.cpp socket_itf.h
 	g++ -Wall -c socket_itf.cpp
-socket_mtd.o: socket_mtd.cpp socket_mtd.h socket_itf.h
+socket_mtd.o: socket_mtd.cpp socket_itf.h socket_mtd.h
 	g++ -Wall -c socket_mtd.cpp
 sm_build: asio_server.o base_asio_socket.o muti-service.o ptr_chan.o socket_itf.o socket_mtd.o
 	+make -C pb sm_build

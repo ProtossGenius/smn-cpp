@@ -1,7 +1,7 @@
 
-client.o: client.cpp smncpp/socket_mtd.h smncpp/base_asio_socket.h smncpp/asio_server.h pb/rip_rpc_itf.pb.h pb/smn_base.pb.h pb/smn_dict.pb.h rpc_nitf/rpc_itf.clt.Login.h
+client.o: client.cpp pb/rip_rpc_itf.pb.h pb/smn_base.pb.h pb/smn_dict.pb.h rpc_nitf/rpc_itf.clt.Login.h smncpp/asio_server.h smncpp/base_asio_socket.h smncpp/socket_mtd.h
 	g++ -Wall -c client.cpp
-server.o: server.cpp smncpp/socket_mtd.h smncpp/base_asio_socket.h smncpp/asio_server.h pb/rip_rpc_itf.pb.h pb/smn_base.pb.h pb/smn_dict.pb.h smn_itf/rpc_itf.Login.h rpc_nitf/rpc_itf.svr.Login.h
+server.o: server.cpp pb/rip_rpc_itf.pb.h pb/smn_base.pb.h pb/smn_dict.pb.h rpc_nitf/rpc_itf.svr.Login.h smn_itf/rpc_itf.Login.h smncpp/asio_server.h smncpp/base_asio_socket.h smncpp/socket_mtd.h
 	g++ -Wall -c server.cpp
 sm_build: client.o server.o
 
