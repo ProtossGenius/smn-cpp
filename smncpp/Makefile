@@ -1,4 +1,5 @@
 
+
 asio_server.o: asio_server.cpp .//.//socket_itf.h .//base_asio_socket.h asio_server.h
 	g++ -Wall -c asio_server.cpp
 base_asio_socket.o: base_asio_socket.cpp .//socket_itf.h base_asio_socket.h
@@ -18,6 +19,7 @@ sm_build_all: asio_server.o base_asio_socket.o muti-service.o socket_itf.o socke
 sm_clean_o:
 	rm -rf ./*.o
 	+make -C pb sm_clean_o
+
 ##Tail
 test:
 

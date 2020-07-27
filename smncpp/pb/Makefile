@@ -1,4 +1,5 @@
 
+
 smn_base.pb.o: smn_base.pb.cc smn_base.pb.h
 	g++ -Wall -c smn_base.pb.cc
 sm_build: smn_base.pb.o

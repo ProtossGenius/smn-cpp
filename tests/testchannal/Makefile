@@ -1,4 +1,5 @@
 
+
 main.o: main.cpp .//smncpp/lockm.h smncpp/channel.h
 	g++ -Wall -c main.cpp
 sm_build: main.o
@@ -9,6 +10,7 @@ sm_build_all: main.o
 
 sm_clean_o:
 	rm -rf ./*.o
+
 
 ##Tail
 

@@ -1,4 +1,5 @@
 
+
 client.o: client.cpp .//pb/smn_base.pb.h .//rpc_nitf/.//pb/smn_base.pb.h .//rpc_nitf/pb/rip_rpc_itf.pb.h .//rpc_nitf/smncpp/lockm.h .//rpc_nitf/smncpp/socket_itf.h .//smncpp/socket_itf.h pb/rip_rpc_itf.pb.h pb/smn_dict.pb.h rpc_nitf/rpc_itf.clt.Login.h smncpp/asio_server.h \
 smncpp/base_asio_socket.h smncpp/socket_mtd.h
 	g++ -Wall -c client.cpp
@@ -17,6 +18,7 @@ sm_build_all: client.o server.o
 
 sm_clean_o:
 	rm -rf ./*.o
+
 
 ##Tail
 debug:

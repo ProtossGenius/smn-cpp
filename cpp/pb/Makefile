@@ -2,6 +2,7 @@ CC=g++
 FLAGS= -Wall -c
 
 ##Head
+
 rip_ano_rpc_itf.pb.o: rip_ano_rpc_itf.pb.cc .//smn_base.pb.h rip_ano_rpc_itf.pb.h
 	g++ -Wall -c rip_ano_rpc_itf.pb.cc
 rip_rpc_itf.pb.o: rip_rpc_itf.pb.cc .//smn_base.pb.h rip_rpc_itf.pb.h
@@ -18,6 +19,7 @@ sm_build_all: rip_ano_rpc_itf.pb.o rip_rpc_itf.pb.o smn_base.pb.o smn_dict.pb.o
 
 sm_clean_o:
 	rm -rf ./*.o
+
 
 ##Tail
 build: sm_build_all 

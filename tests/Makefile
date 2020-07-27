@@ -1,4 +1,5 @@
 
+
 sm_build: 
 	+make -C anyTest sm_build
 	+make -C testboost sm_build
@@ -20,6 +21,7 @@ sm_clean_o:
 	+make -C testchannal sm_clean_o
 	+make -C testproto sm_clean_o
 	+make -C testrpc sm_clean_o
+
 ##Tail
 clean:
 	cd ./testproto && make clean

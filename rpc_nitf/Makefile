@@ -1,6 +1,7 @@
 CC=g++
 FLAGS=-Wall -c
 ##Head
+
 ano_rpc_itf.clt.Login.o: ano_rpc_itf.clt.Login.cpp .//.//pb/smn_base.pb.h .//pb/rip_ano_rpc_itf.pb.h .//smncpp/lockm.h .//smncpp/socket_itf.h ano_rpc_itf.clt.Login.h pb/smn_dict.pb.h smncpp/socket_mtd.h
 	g++ -Wall -c ano_rpc_itf.clt.Login.cpp
 ano_rpc_itf.clt.MutiTest.o: ano_rpc_itf.clt.MutiTest.cpp .//pb/smn_base.pb.h .//smncpp/lockm.h .//smncpp/socket_itf.h ano_rpc_itf.clt.MutiTest.h pb/rip_ano_rpc_itf.pb.h pb/smn_dict.pb.h smncpp/socket_mtd.h
@@ -31,6 +32,7 @@ sm_build_all: ano_rpc_itf.clt.Login.o ano_rpc_itf.clt.MutiTest.o ano_rpc_itf.svr
 
 sm_clean_o:
 	rm -rf ./*.o
+
 
 ##Tail
 test:

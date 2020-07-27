@@ -3,6 +3,7 @@ CC=g++
 FLAGS=-Wall -c
 smn_cpps=$(GOPATH)/src/github.com/ProtossGenius/SureMoonNet/cpppb
 ##Head
+
 sm_build: 
 	+make -C cpp sm_build
 	+make -C datas sm_build
@@ -30,6 +31,7 @@ sm_clean_o:
 	+make -C rpcitf sm_clean_o
 	+make -C smncpp sm_clean_o
 	+make -C tests sm_clean_o
+
 ##Tail
 cmp_goitf: 
 	smnrpc-autocode -cfg ./datas/cfgs/testrpc.json
