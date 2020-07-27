@@ -11,14 +11,14 @@ socket_itf.o: socket_itf.cpp socket_itf.h
 socket_mtd.o: socket_mtd.cpp .//socket_itf.h socket_mtd.h
 	g++ -Wall -c socket_mtd.cpp
 sm_build: asio_server.o base_asio_socket.o muti-service.o socket_itf.o socket_mtd.o
-	+make -C pb sm_build
+
 
 sm_build_all: asio_server.o base_asio_socket.o muti-service.o socket_itf.o socket_mtd.o
-	+make -C pb sm_build_all
+
 
 sm_clean_o:
 	rm -rf ./*.o
-	+make -C pb sm_clean_o
+
 
 ##Tail
 test:
