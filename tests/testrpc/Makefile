@@ -1,7 +1,10 @@
 
-client.o: client.cpp pb/rip_rpc_itf.pb.h pb/smn_base.pb.h pb/smn_dict.pb.h rpc_nitf/rpc_itf.clt.Login.h smncpp/asio_server.h smncpp/base_asio_socket.h smncpp/socket_mtd.h
+client.o: client.cpp .//pb/smn_base.pb.h .//rpc_nitf/.//pb/smn_base.pb.h .//rpc_nitf/pb/rip_rpc_itf.pb.h .//rpc_nitf/smncpp/lockm.h .//rpc_nitf/smncpp/socket_itf.h .//smncpp/socket_itf.h pb/rip_rpc_itf.pb.h pb/smn_dict.pb.h rpc_nitf/rpc_itf.clt.Login.h smncpp/asio_server.h \
+smncpp/base_asio_socket.h smncpp/socket_mtd.h
 	g++ -Wall -c client.cpp
-server.o: server.cpp pb/rip_rpc_itf.pb.h pb/smn_base.pb.h pb/smn_dict.pb.h rpc_nitf/rpc_itf.svr.Login.h smn_itf/rpc_itf.Login.h smncpp/asio_server.h smncpp/base_asio_socket.h smncpp/socket_mtd.h
+server.o: server.cpp .//pb/smn_base.pb.h .//rpc_nitf/.//pb/smn_base.pb.h .//rpc_nitf/.//smn_itf/.//pb/smn_base.pb.h .//rpc_nitf/.//smn_itf/pb/rip_rpc_itf.pb.h .//rpc_nitf/.//smn_itf/smncpp/socket_itf.h .//rpc_nitf/.//smncpp/.//socket_itf.h .//rpc_nitf/.//smncpp/base_asio_socket.h .//rpc_nitf/pb/rip_rpc_itf.pb.h .//rpc_nitf/smn_itf/rpc_itf.Login.h .//rpc_nitf/smncpp/asio_server.h \
+.//smn_itf/.//pb/smn_base.pb.h .//smn_itf/pb/rip_rpc_itf.pb.h .//smn_itf/smncpp/socket_itf.h .//smncpp/socket_itf.h pb/rip_rpc_itf.pb.h pb/smn_dict.pb.h rpc_nitf/rpc_itf.svr.Login.h smn_itf/rpc_itf.Login.h smncpp/asio_server.h smncpp/base_asio_socket.h \
+smncpp/socket_mtd.h
 	g++ -Wall -c server.cpp
 sm_build: client.o server.o
 

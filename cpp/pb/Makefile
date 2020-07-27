@@ -2,9 +2,9 @@ CC=g++
 FLAGS= -Wall -c
 
 ##Head
-rip_ano_rpc_itf.pb.o: rip_ano_rpc_itf.pb.cc rip_ano_rpc_itf.pb.h
+rip_ano_rpc_itf.pb.o: rip_ano_rpc_itf.pb.cc .//smn_base.pb.h rip_ano_rpc_itf.pb.h
 	g++ -Wall -c rip_ano_rpc_itf.pb.cc
-rip_rpc_itf.pb.o: rip_rpc_itf.pb.cc rip_rpc_itf.pb.h
+rip_rpc_itf.pb.o: rip_rpc_itf.pb.cc .//smn_base.pb.h rip_rpc_itf.pb.h
 	g++ -Wall -c rip_rpc_itf.pb.cc
 smn_base.pb.o: smn_base.pb.cc smn_base.pb.h
 	g++ -Wall -c smn_base.pb.cc
