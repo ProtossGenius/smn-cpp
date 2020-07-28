@@ -1,0 +1,6 @@
+[
+	{"type":"l", "path":"../../smncpp"},
+	{"type":"l", "path":"../../rpc_nitf"},
+	{"type":"l", "path":"../../cpp/smn_itf"},
+	{"type":"l", "path":"../../cpp/pb"}
+]
