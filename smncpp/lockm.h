@@ -1,3 +1,7 @@
+#ifndef LOCKM_H_6O85XWT4
+#define LOCKM_H_6O85XWT4
+
+
 #include <mutex>
 
 namespace smnet{
@@ -13,3 +17,5 @@ namespace smnet{
 	};
 
 }
+
+#endif /* end of include guard: LOCKM_H_6O85XWT4 */
