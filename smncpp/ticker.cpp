@@ -1,7 +1,6 @@
 #include "ticker.h"
 #include "lockm.h"
 #include <thread>
-#include <iostream>
 using namespace std;
 namespace smnet{
 	typedef SMLockMgr lockm;
@@ -9,13 +8,13 @@ namespace smnet{
 		_droped = true;
 	}
 
-	void Ticker::tick(){
+	bool Ticker::tick(){
 		lockm _(this->_tsafe);
 		_chan.one_thread_get();
+		return !_droped;
 	}
 
 	void Ticker::put(){
-		cout << "ticker: " <<_idx << "\t\tput" <<endl;
 		if (_chan.size() > 180){
 			return ;
 		}

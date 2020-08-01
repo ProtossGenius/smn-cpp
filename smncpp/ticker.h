@@ -19,7 +19,7 @@ namespace smnet{
 		public:
 			~Ticker(){close();}
 		public:
-			void tick(); // wait 
+			bool tick(); // wait 
 			//close remove from It's TickManager
 			void close();
 		private:
