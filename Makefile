@@ -35,31 +35,23 @@ sm_clean_o:
 ##Tail
 cmp_goitf: 
 	smnrpc-autocode -cfg ./datas/cfgs/testrpc.json
-
-test_boost: sm_build_all 
-	+make -C tests/testboost qrun 
-test_proto: sm_build_all
-	+make -C tests/testproto qrun
-
-test_channal: sm_build_all
-	+make -C tests/testchannal qrun
 install:
 
 build: sm_build_all 
 
 clean: sm_clean_o
-	cd tests && make clean
-	cd ./smncpp && make clean
-	cd ./cpp/pb && make clean
-	cd ./rpc_nitf && make clean
+	+make -C tests clean 
+	+make -C smncpp clean
+	+make -C cpp/pb clean
+	+make -C rpc_nitf clean
 	rm -rf ./cpp/smn_itf/*.h
 	rm -rf ./datas/proto/*.proto
 dotest: test_proto test_boost test_channal 
 
 test:  cmp_goitf 
 	smake
-	make sm_build -j8
-	make dotest -j8
+	make sm_build -j8 
+	make -C tests test -j8
 
 rely_intall:
 	#boost

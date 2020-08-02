@@ -22,10 +22,10 @@ namespace smnet{
 		_chan.push(0);
 	}
 	
-	void TickUnit::tick(){
-		++_cur;
+	int TickUnit::tick(int ms){
+		_cur += ms;
 		if(_cur < _waitTime){
-			return;
+			return _waitTime - _cur;
 		}
 		_cur = 0;
 		for (auto it = _ticks.begin(); it != _ticks.end(); ){
@@ -38,6 +38,8 @@ namespace smnet{
 			cur->put();
 			++it;
 		}
+
+		return _waitTime;
 	}
 	
 
@@ -62,6 +64,7 @@ namespace smnet{
 	}
 
 	void TickManager::tickLoop(){
+		int wTime = 1;
 		while(true){
 			bool isEmpty = false;
 			{
@@ -70,29 +73,36 @@ namespace smnet{
 					isEmpty = true;
 				}
 			}
+
 			if (isEmpty){
 				this->_emptyLock.lock();
 			}
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(1));
-			for(auto it = this->_tunits.begin(); it != this->_tunits.end();){
-				auto& cur = it->second;
-	
-				{//delete no-use TickUnit;
-					lockm _(_tsafe);
+			std::this_thread::sleep_for(std::chrono::milliseconds(wTime));
+			int minWait = -1;
+			{
+				lockm _(_tsafe);
+				for(auto it = this->_tunits.begin(); it != this->_tunits.end();){
+					auto& cur = it->second;
+					//delete no-use TickUnit;
 					if (cur->empty()){
 						_tunits.erase(it++);
 						continue;
 					}
+					//do tick
+					if (minWait == -1){
+						minWait = cur->tick(wTime);
+					}else{
+						minWait = std::min(minWait, cur->tick(wTime));
+					}
+				
+					++it;
 				}
-
-				{//do tick
-					lockm _(_tsafe);
-					cur->tick();
-				}
-				++it;
 			}
-
+			wTime = 1;
+			if (minWait != -1){
+				wTime = minWait;
+			}
 		}
 	}
 

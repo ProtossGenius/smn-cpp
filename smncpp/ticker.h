@@ -40,7 +40,11 @@ namespace smnet{
 		public:
 			TickUnit(int waitTime) :_waitTime(waitTime), _cur(0) {}
 		public:
-			void tick();
+			/* tick
+			 * @ms how many millsec wait.
+			 * @return how many millsec need wait.
+			 */
+			int tick(int ms); 
 			bool empty(){return _ticks.empty();}
 			std::shared_ptr<Ticker> getTicker();
 		private:
