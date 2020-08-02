@@ -49,12 +49,15 @@ namespace smnet{
 
 	TickManager::TickManager(){
 		_emptyLock.lock();
+		_thread = std::shared_ptr<std::thread>(new std::thread(&TickManager::tickLoop, this))	;
 	}
 
+	TickManager::~TickManager(){
+		_thread->detach();
+	}
 
-	TickManager* TickManager::Instance(){
-		static TickManager* ins = new TickManager();
-		new std::thread(&TickManager::tickLoop, ins);
+	TickManager& TickManager::Instance(){
+		static TickManager ins;
 		return ins;
 	}
 

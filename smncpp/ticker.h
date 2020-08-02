@@ -6,6 +6,7 @@
 #include <mutex>
 #include <memory>
 #include <boost/noncopyable.hpp>
+#include <thread>
 namespace smnet{
 	class TickUnit;
 	class Ticker:boost::noncopyable{
@@ -51,11 +52,12 @@ namespace smnet{
 	class TickManager:boost::noncopyable{
 		private:
 			TickManager();
+			~TickManager();
 		public:
 			//get a ticker tick per tickMs millsec;if tickMs == 0, return nullptr;
 			std::shared_ptr<Ticker> getTicker(int tickMs);
 		public:
-			static TickManager* Instance();
+			static TickManager& Instance();
 		private:
 			std::shared_ptr<Ticker> _get_ticker(int tickMs);
 			void tickLoop();
@@ -63,7 +65,13 @@ namespace smnet{
 			std::mutex _tsafe;
 			std::mutex _emptyLock;//organization idling
 			std::map<int, std::shared_ptr<TickUnit> > _tunits;
+			std::shared_ptr<std::thread> _thread;
 	};
+
+	inline 
+	TickManager& GetTickManager(){
+		return TickManager::Instance();
+	}
 }
 
 
