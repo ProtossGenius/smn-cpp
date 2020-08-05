@@ -76,6 +76,11 @@ namespace smnet{
 	TickManager& GetTickManager(){
 		return TickManager::Instance();
 	}
+
+	inline void sleep(int millsec){
+		auto ticker = GetTickManager().getTicker(millsec);
+		ticker->tick();
+	}
 }
 
 
