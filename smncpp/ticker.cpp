@@ -7,10 +7,18 @@ namespace smnet{
 	void Ticker::close(){
 		_droped = true;
 	}
+	
+	void Ticker::setTickDo(std::function<void()> tickDo){
+		lockm _(this->_tsafe);
+		if(tickDo != nullptr){
+			this->_tickDo = tickDo;
+		}
+	}
 
 	bool Ticker::tick(){
 		lockm _(this->_tsafe);
 		_chan.one_thread_get();
+		this->_tickDo();
 		return !_droped;
 	}
 

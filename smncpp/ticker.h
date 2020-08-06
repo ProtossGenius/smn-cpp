@@ -7,11 +7,14 @@
 #include <memory>
 #include <boost/noncopyable.hpp>
 #include <thread>
+#include <functional>
 namespace smnet{
 	class TickUnit;
+	inline 
+	void tick_nth(){}
 	class Ticker:boost::noncopyable{
 		private:
-			Ticker(): _chan(200), _droped(false){
+			Ticker(): _chan(200), _droped(false), _tickDo(tick_nth){
 				static int idx = 0;
 				this->_idx = idx;
 				++idx;
@@ -20,6 +23,8 @@ namespace smnet{
 		public:
 			~Ticker(){close();}
 		public:
+			//should not block..
+			void setTickDo(std::function<void()> tickDo);
 			bool tick(); // wait 
 			//close remove from It's TickManager
 			void close();
@@ -33,6 +38,7 @@ namespace smnet{
 			char _tmp;
 			std::mutex _tsafe;
 			int _idx;
+			std::function<void()> _tickDo;
 	};
 	
 	//TickUnit this_thiread.sleep(waitTime) and send flag to ticks.
