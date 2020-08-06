@@ -14,7 +14,7 @@ namespace smnet{
 	void tick_nth(){}
 	class Ticker:boost::noncopyable{
 		private:
-			Ticker(): _chan(200), _droped(false), _tickDo(tick_nth){
+			Ticker(): _chan(2), _droped(false), _tickDo(tick_nth){
 				static int idx = 0;
 				this->_idx = idx;
 				++idx;

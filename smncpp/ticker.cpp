@@ -18,12 +18,12 @@ namespace smnet{
 	bool Ticker::tick(){
 		lockm _(this->_tsafe);
 		_chan.one_thread_get();
-		this->_tickDo();
 		return !_droped;
 	}
 
 	void Ticker::put(){
-		if (_chan.size() > 180){
+		this->_tickDo();
+		if (!_chan.empty()){
 			return ;
 		}
 
