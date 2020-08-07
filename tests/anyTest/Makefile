@@ -1,5 +1,4 @@
 
-
 main.o: main.cpp 
 	g++ -Wall -c main.cpp
 sm_build: main.o

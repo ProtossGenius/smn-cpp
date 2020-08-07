@@ -10,9 +10,7 @@ namespace smnet{
 	
 	void Ticker::setTickDo(std::function<void()> tickDo){
 		lockm _(this->_tsafe);
-		if(tickDo != nullptr){
-			this->_tickDo = tickDo;
-		}
+		this->_tickDo = tickDo;
 	}
 
 	bool Ticker::tick(){

@@ -1,5 +1,4 @@
 
-
 sm_build: 
 	+make -C anyTest sm_build
 	+make -C testboost sm_build

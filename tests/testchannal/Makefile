@@ -1,6 +1,5 @@
 
-
-main.o: main.cpp .//smncpp/lockm.h smncpp/channel.h
+main.o: main.cpp ./smncpp/lockm.h smncpp/channel.h
 	g++ -Wall -c main.cpp
 sm_build: main.o
 

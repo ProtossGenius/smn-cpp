@@ -1,5 +1,4 @@
 
-
 asio_server.o: asio_server.cpp ./base_asio_socket.h ./socket_itf.h asio_server.h
 	g++ -Wall -c asio_server.cpp
 base_asio_socket.o: base_asio_socket.cpp ./socket_itf.h base_asio_socket.h

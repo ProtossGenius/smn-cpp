@@ -1,6 +1,5 @@
 
-
-testproto.o: testproto.cpp .//pb/smn_base.pb.h pb/rip_rpc_itf.pb.h
+testproto.o: testproto.cpp ./pb/smn_base.pb.h pb/rip_rpc_itf.pb.h
 	g++ -Wall -c testproto.cpp
 sm_build: testproto.o
 

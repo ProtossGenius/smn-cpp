@@ -1,5 +1,4 @@
 
-
 sm_build: 
 	+make -C ano_rpc_itf sm_build
 	+make -C rpc_itf sm_build

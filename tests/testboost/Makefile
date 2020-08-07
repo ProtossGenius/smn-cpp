@@ -1,5 +1,4 @@
 
-
 hello.o: hello.cpp 
 	g++ -Wall -c hello.cpp
 sm_build: hello.o

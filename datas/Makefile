@@ -1,5 +1,4 @@
 
-
 sm_build: 
 	+make -C cfgs sm_build
 	+make -C proto sm_build
