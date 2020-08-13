@@ -17,6 +17,7 @@ public:
 	Bytes& operator= (Bytes&& bytes);
 	void swap(Bytes& rhs);
 	size_t size(){return _len;}
+	const size_t size()const {return _len;}
 public:
 	char* arr;
 private:

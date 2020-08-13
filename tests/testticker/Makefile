@@ -1,5 +1,5 @@
 
-main.o: main.cpp ./smncpp/channel.h ./smncpp/lockm.h smncpp/ticker.h
+main.o: main.cpp smncpp/ticker.h
 	g++ -Wall -c main.cpp
 sm_build: main.o
 
