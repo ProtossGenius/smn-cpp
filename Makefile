@@ -23,7 +23,7 @@ sm_build_all:
 	+make -C tests sm_build_all
 
 sm_clean_o:
-	rm -rf ./*.o
+	rm -rf ./*.o ./run.main
 	+make -C cpp sm_clean_o
 	+make -C datas sm_clean_o
 	+make -C docs sm_clean_o

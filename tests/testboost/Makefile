@@ -8,7 +8,7 @@ sm_build_all: hello.o
 
 
 sm_clean_o:
-	rm -rf ./*.o
+	rm -rf ./*.o ./run.main
 
 
 ##Tail

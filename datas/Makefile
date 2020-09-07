@@ -8,7 +8,7 @@ sm_build_all:
 	+make -C proto sm_build_all
 
 sm_clean_o:
-	rm -rf ./*.o
+	rm -rf ./*.o ./run.main
 	+make -C cfgs sm_clean_o
 	+make -C proto sm_clean_o
 

@@ -16,7 +16,7 @@ sm_build_all:
 	+make -C testticker sm_build_all
 
 sm_clean_o:
-	rm -rf ./*.o
+	rm -rf ./*.o ./run.main
 	+make -C anyTest sm_clean_o
 	+make -C testboost sm_clean_o
 	+make -C testchannal sm_clean_o

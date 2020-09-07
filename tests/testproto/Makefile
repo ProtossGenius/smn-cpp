@@ -8,7 +8,7 @@ sm_build_all: testproto.o
 	+make -C pb sm_build_all
 
 sm_clean_o:
-	rm -rf ./*.o
+	rm -rf ./*.o ./run.main
 
 
 ##Tail

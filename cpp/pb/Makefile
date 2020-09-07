@@ -18,7 +18,7 @@ sm_build_all: rip_ano_rpc_itf.pb.o rip_rpc_itf.pb.o smn_base.pb.o smn_dict.pb.o
 
 
 sm_clean_o:
-	rm -rf ./*.o
+	rm -rf ./*.o ./run.main
 
 
 ##Tail

@@ -16,7 +16,7 @@ sm_build_all: client.o server.o
 	+make -C smncpp sm_build_all
 
 sm_clean_o:
-	rm -rf ./*.o
+	rm -rf ./*.o ./run.main
 
 
 ##Tail

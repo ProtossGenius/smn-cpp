@@ -18,7 +18,7 @@ sm_build_all: asio_server.o base_asio_socket.o muti-service.o socket_itf.o socke
 
 
 sm_clean_o:
-	rm -rf ./*.o
+	rm -rf ./*.o ./run.main
 
 
 ##Tail
