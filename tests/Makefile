@@ -1,6 +1,7 @@
 
 sm_build: 
 	+make -C anyTest sm_build
+	+make -C test_cxx20coroutine sm_build
 	+make -C testboost sm_build
 	+make -C testchannal sm_build
 	+make -C testproto sm_build
@@ -9,6 +10,7 @@ sm_build:
 
 sm_build_all: 
 	+make -C anyTest sm_build_all
+	+make -C test_cxx20coroutine sm_build_all
 	+make -C testboost sm_build_all
 	+make -C testchannal sm_build_all
 	+make -C testproto sm_build_all
@@ -18,6 +20,7 @@ sm_build_all:
 sm_clean_o:
 	rm -rf ./*.o ./run.main
 	+make -C anyTest sm_clean_o
+	+make -C test_cxx20coroutine sm_clean_o
 	+make -C testboost sm_clean_o
 	+make -C testchannal sm_clean_o
 	+make -C testproto sm_clean_o
