@@ -1,0 +1,9 @@
+build:
+	g++ -g -O2 -std=c++2a -Wall -c main.cpp -fcoroutines
+	g++ -g -O2  -std=c++2a ./*.o  -o run.main -fcoroutines -pthread
+
+debug: build
+	gdb run.main
+
+qrun:build 
+	./run.main 
